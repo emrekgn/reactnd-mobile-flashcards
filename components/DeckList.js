@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, ScrollView } from 'react-native'
-import { connect } from "react-redux"
+import { SafeAreaView, View, FlatList, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { connect } from 'react-redux'
 import { handleInitialData } from '../actions'
-import Deck from './Deck'
+import { purple, lightPurp } from '../utils/colors'
 
 class DeckList extends Component {
   componentDidMount() {
@@ -10,6 +10,18 @@ class DeckList extends Component {
   }
   render() {
     const { decks, navigation } = this.props
+
+    const renderItem = ({ item }) => (
+      <TouchableOpacity 
+        onPress={() => navigation.navigate('Deck', { id: item.id })}>
+          <Text style={styles.title}>{item.title}</Text>
+          <Text style={styles.text}>
+            {item.questions.length > 1
+              ? item.questions.length + ' Cards'
+              : item.questions.length + ' Card'}
+          </Text>
+      </TouchableOpacity>
+    )
 
     if (decks == null || Object.keys(decks).length === 0) {
       return (
@@ -20,18 +32,13 @@ class DeckList extends Component {
     }
 
     return (
-      <ScrollView>
-        <View style={styles.container}>
-          { Object.keys(decks).map(key => (
-            <View key={key}>
-              <Deck 
-                deck={decks[key]} 
-                onPress={(deck) => navigation.navigate("Deck", { id: deck.id })} 
-              />
-            </View>
-          ))}
-        </View>
-      </ScrollView>
+      <SafeAreaView style={styles.container}>
+        <FlatList 
+          data={Object.values(decks)}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+        />
+      </SafeAreaView>
     )
   }
 }
@@ -43,6 +50,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: purple,
+    marginBottom: 10
+  },
+  text: {
+    fontSize: 15,
+    color: lightPurp
+  }
 })
 
 

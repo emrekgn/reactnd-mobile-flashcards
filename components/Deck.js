@@ -1,21 +1,13 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import { purple, lightPurp } from '../utils/colors'
 
 class Deck extends Component {
   render() {
-    const { deck, onPress } = this.props
-
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={onPress(deck)}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.text}>
-            {questions.length > 1 || questions.length < 1
-              ? `${questions.length} Cards`
-              : `${questions.length} Card`}
-          </Text>
-        </TouchableOpacity>
+        <Text>TEST</Text>
       </View>
     )
   }
@@ -40,4 +32,11 @@ const styles = StyleSheet.create({
   }
 });
 
-export default Deck
+
+function mapStateToProps (decks, { route }) {
+  return {
+    deck: decks[route.params.id],
+  }
+}
+
+export default connect(mapStateToProps)(Deck)

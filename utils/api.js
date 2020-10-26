@@ -4,7 +4,7 @@ import { generateUID } from './helpers'
 export const DECK_STORAGE_KEY = "@mobile-flashcards:decks";
 
 // Just some initial data for demo purposes:
-const data = {
+const INITIAL_DATA = {
   'fghns1lhvy4ik4nc5o90il': {
     title: 'React',
     id: 'fghns1lhvy4ik4nc5o90il',
@@ -49,16 +49,16 @@ const getData = async (key) => {
   }
 }
 
-const initData = () => {
-  getData(DECK_STORAGE_KEY).then((data) => {
-    if (!data) {
-      storeData(DECK_STORAGE_KEY, data)
-    }
-  })
-}
-
 export function getDecks() {
-  return getData(DECK_STORAGE_KEY).then(JSON.parse)
+  return getData(DECK_STORAGE_KEY)
+    .then((data) => {
+      if (data === null) {
+        // Set initial data for demo purposes
+        storeData(DECK_STORAGE_KEY, INITIAL_DATA)
+        return INITIAL_DATA
+      }
+      return data
+    })
 }
 
 export function getDeck(id) {
@@ -68,26 +68,23 @@ export function getDeck(id) {
 
 export function addDeck(title) {
   getDecks().then((data) => {
-    const deckId = generateUID()
-    data[deckId] = {
+    const id = generateUID()
+    data[id] = {
       title: title,
-      id: deckId,
+      id: id,
       questions: []
     }
     storeData(DECK_STORAGE_KEY, data)
-    return deckId
+    return id
   })
 }
 
-export function addCardToDeck(card, deckId) {
+export function addCardToDeck(card, id) {
   getDecks().then((data) => {
-    if (!data[deckId]) {
+    if (!data[id]) {
       return
     }
-    data[deckId].questions.push(card)
+    data[id].questions.push(card)
     storeData(DECK_STORAGE_KEY, data)
   })
 }
-
-// Initialize with dummy data for demo
-initData()
