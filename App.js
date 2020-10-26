@@ -5,79 +5,38 @@ import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
 import { Constants } from 'expo'
-import { TabNavigator, StackNavigator } from 'react-navigation'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { purple, white } from './utils/colors'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
-import { DeckList } from './components/DeckList'
-import { Deck } from './components/Deck'
-import { NewDeck } from './components/NewDeck'
+import DeckList from './components/DeckList'
+import Deck from './components/Deck'
+import NewDeck from './components/NewDeck'
 
-function UdaciStatusBar ({backgroundColor, ...props}) {
+const Tab = createBottomTabNavigator()
+
+function Tabs() {
   return (
-    <View style={{ backgroundColor, height: Constants.statusBarHeight }}>
-      <StatusBar translucent backgroundColor={backgroundColor} {...props} />
-    </View>
+    <Tab.Navigator>
+      <Tab.Screen name="DeckList" component={DeckList} options={{ title: 'Decks' }} />
+      <Tab.Screen name="NewDeck" component={NewDeck} options={{ title: 'New' }} />
+    </Tab.Navigator>
   )
 }
 
-const Tabs = TabNavigator({
-  DeckList: {
-    screen: DeckList,
-    navigationOptions: {
-      tabBarLabel: 'Deck List',
-      tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />
-    },
-  },
-  NewDeck: {
-    screen: NewDeck,
-    navigationOptions: {
-      tabBarLabel: 'New Deck',
-      tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />
-    },
-  },
-}, {
-  navigationOptions: {
-    header: null
-  },
-  tabBarOptions: {
-    activeTintColor: white,
-    style: {
-      height: 56,
-      backgroundColor: purple,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
-      shadowOffset: {
-        width: 0,
-        height: 3
-      },
-      shadowRadius: 6,
-      shadowOpacity: 1
-    }
-  }
-})
-
-const MainNavigator = StackNavigator({
-  Home: {
-    screen: Tabs,
-  },
-  DeckDetail: {
-    screen: Deck,
-    navigationOptions: {
-      headerTintColor: white,
-      headerStyle: {
-        backgroundColor: purple,
-      }
-    }
-  }
-})
+const Stack = createStackNavigator()
 
 export default class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <View style={{flex: 1}}>
-          <UdaciStatusBar backgroundColor={purple} barStyle="light-content" />
-          <MainNavigator />
-        </View>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="Home" component={Tabs} options={{ title: 'Home' }} />
+            <Stack.Screen name="Deck" component={Deck} options={{ title: 'Deck' }} />
+          </Stack.Navigator>
+        </NavigationContainer>
       </Provider>
     )
   }
