@@ -4,12 +4,10 @@ import { StyleSheet, View } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
-import { Constants } from 'expo'
+import middleware from './middleware'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { purple, white } from './utils/colors'
-import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import DeckList from './components/DeckList'
 import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
@@ -27,10 +25,12 @@ function Tabs() {
 
 const Stack = createStackNavigator()
 
+const store = createStore(reducer, middleware)
+
 export default class App extends Component {
   render() {
     return (
-      <Provider store={createStore(reducer)}>
+      <Provider store={store}>
         <NavigationContainer>
           <Stack.Navigator>
             <Stack.Screen name="Home" component={Tabs} options={{ title: 'Home' }} />
