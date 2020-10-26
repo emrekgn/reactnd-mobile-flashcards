@@ -26,7 +26,7 @@ class DeckList extends Component {
     if (decks == null || Object.keys(decks).length === 0) {
       return (
         <View style={styles.container}>
-          <Text>You don't have any decks yet! You can create new decks in New Deck tab...</Text>
+          <Text>You don't have any decks yet! You can create new decks in the New Deck tab...</Text>
         </View>
       )
     }

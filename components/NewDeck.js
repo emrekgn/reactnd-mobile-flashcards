@@ -26,6 +26,7 @@ class NewDeck extends Component {
     navigation.goBack()
   }
   render() {
+    const { title } = this.state
     return (
       <View styles={styles.container}>
           <TextInput
