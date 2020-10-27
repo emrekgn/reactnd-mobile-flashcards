@@ -2,7 +2,9 @@ import { getDecks, addDeck, addCardToDeck } from '../utils/api'
 
 export const GET_DECKS = 'GET_DECKS'
 export const ADD_DECK = 'ADD_DECK'
+export const REMOVE_DECK = 'REMOVE_DECK'
 export const ADD_CARD = 'ADD_CARD'
+export const REMOVE_CARD = 'REMOVE_CARD'
 
 function getDecksAction (data) {
   return {
@@ -30,6 +32,7 @@ function addCardAction (card, id) {
 export function handleInitialData () {
   return (dispatch) => {
     return getDecks().then(data => {
+      console.log("DATAAA:", data)
       dispatch(getDecksAction(data)) 
     })
   }

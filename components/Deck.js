@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import { purple, lightPurp } from '../utils/colors'
+import { Button, Card, Title, Paragraph } from 'react-native-paper'
 
 class Deck extends Component {
   render() {
@@ -9,27 +10,36 @@ class Deck extends Component {
     const { title, id, questions } = deck
 
     return (
-      <View style={styles.container}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.title}>{title}</Text>
-          <Text style={styles.text}>
-              {questions.length > 1
-                ? questions.length + ' Cards'
-                : questions.length + ' Card'}
-            </Text>
+      <View style={{ flex: 1 }}>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <Card>
+            <Card.Content>
+              <Title>{title}</Title>
+              <Paragraph style={styles.text}>
+                {questions.length > 1
+                  ? questions.length + ' Cards'
+                  : questions.length + ' Card'}
+              </Paragraph>
+            </Card.Content>
+          </Card>
         </View>
         <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
-          <TouchableOpacity
+          <Button
             onPress={() => navigation.navigate('Quiz', { id: id })}
             disabled={questions.length === 0}
+            mode='contained'
+            icon='comment-question'
             >
               <Text>Start Quiz</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
+          </Button>
+          <Button
+            style={{ marginTop: 10 }}
             onPress={() => navigation.navigate('NewQuestion', { id: id })}
+            mode='contained'
+            icon='plus'
             >
             <Text>Add Card</Text>
-          </TouchableOpacity>
+          </Button>
         </View>
       </View>
     )

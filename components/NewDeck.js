@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+import { TextInput } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { handleAddDeck } from '../actions/index'
 import { purple, white } from '../utils/colors'
+import { Button } from 'react-native-paper'
 
 class NewDeck extends Component {
   state = {
@@ -28,19 +30,26 @@ class NewDeck extends Component {
   render() {
     const { title } = this.state
     return (
-      <View styles={styles.container}>
-          <TextInput
-            styles={styles.row}
-            onChangeText={this.handleChange}
-            placeholder="What is the title of your new deck?"
-            value={title}
-            onChangeText={this.handleTextChange}
-          />
-          <TouchableOpacity 
-            onPress={this.handleSubmit} 
-            style={styles.submitBtn}>
-              <Text style={styles.submitBtnText}>Submit</Text>
-          </TouchableOpacity>
+      <View style={{ flex: 1 }}>
+          <View style={{ flex: 1, justifyContent: 'center' }}>
+            <TextInput
+              styles={styles.row}
+              onChangeText={this.handleChange}
+              label="What is the title of your new deck?"
+              value={title}
+              onChangeText={this.handleTextChange}
+            />
+          </View>
+          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+              <Button 
+                onPress={this.handleSubmit} 
+                style={{ marginTop: 10 }}
+                mode='contained'
+                icon='content-save'
+                >
+                  <Text>Submit</Text>
+              </Button>
+          </View>
       </View>
     )
   }
@@ -55,23 +64,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     alignItems: 'center',
-  },
-  submitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center',
-  },
+  }
 })
 
 export default connect()(NewDeck)

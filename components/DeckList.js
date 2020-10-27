@@ -3,6 +3,7 @@ import { SafeAreaView, View, FlatList, Text, StyleSheet, TouchableOpacity } from
 import { connect } from 'react-redux'
 import { handleInitialData } from '../actions'
 import { purple, lightPurp } from '../utils/colors'
+import { Card, Title, Paragraph } from 'react-native-paper'
 
 class DeckList extends Component {
   componentDidMount() {
@@ -12,15 +13,19 @@ class DeckList extends Component {
     const { decks, navigation } = this.props
 
     const renderItem = ({ item }) => (
-      <TouchableOpacity 
-        onPress={() => navigation.navigate('Deck', { id: item.id })}>
-          <Text style={styles.title}>{item.title}</Text>
-          <Text style={styles.text}>
-            {item.questions.length > 1
-              ? item.questions.length + ' Cards'
-              : item.questions.length + ' Card'}
-          </Text>
-      </TouchableOpacity>
+      <Card>
+        <Card.Content>
+          <TouchableOpacity 
+          onPress={() => navigation.navigate('Deck', { id: item.id })}>
+            <Title>{item.title}</Title>
+            <Paragraph style={styles.text}>
+              {item.questions.length > 1
+                ? item.questions.length + ' Cards'
+                : item.questions.length + ' Card'}
+            </Paragraph>
+        </TouchableOpacity>
+        </Card.Content>
+      </Card>
     )
 
     if (decks == null || Object.keys(decks).length === 0) {
