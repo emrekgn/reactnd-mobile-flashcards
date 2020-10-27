@@ -1,10 +1,8 @@
-import { getDecks, addDeck } from '../utils/api'
+import { getDecks, addDeck, addCardToDeck } from '../utils/api'
 
 export const GET_DECKS = 'GET_DECKS'
 export const ADD_DECK = 'ADD_DECK'
-export const REMOVE_DECK = 'REMOVE_DECK'
 export const ADD_CARD = 'ADD_CARD'
-export const REMOVE_CARD = 'REMOVE_CARD'
 
 function getDecksAction (data) {
   return {
@@ -21,6 +19,14 @@ function addDeckAction (id, title) {
   }
 }
 
+function addCardAction (card, id) {
+  return {
+    type: ADD_CARD,
+    card,
+    id,
+  }
+}
+
 export function handleInitialData () {
   return (dispatch) => {
     return getDecks().then(data => {
@@ -34,5 +40,14 @@ export function handleAddDeck(title) {
     return addDeck(title).then((id) => {
       dispatch(addDeckAction(id, title))
     })
+  }
+}
+
+export function handleAddCard(card, id) {
+  return (dispatch) => {
+    return dispatch(addCardToDeck(card, id))
+      .then(() => {
+        dispatch(addCardAction(card, id))
+      })
   }
 }
