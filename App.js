@@ -13,6 +13,7 @@ import Deck from './components/Deck'
 import NewQuestion from './components/NewQuestion'
 import Quiz from './components/Quiz'
 import { white, purple, lightPurp } from './utils/colors'
+import { StatusBar } from 'expo-status-bar'
 
 const store = createStore(reducer, middleware)
 const Stack = createStackNavigator()
@@ -23,7 +24,7 @@ function DeckStack() {
     <Stack.Navigator initialRouteName="DeckList">
       <Stack.Screen name="DeckList" component={DeckList} options={{ title: 'Home' }} />
       <Stack.Screen name="Deck" component={Deck} options={{ title: 'Deck' }} />
-      <Stack.Screen name="Card" component={NewQuestion} options={{ title: 'Add Card' }} />
+      <Stack.Screen name="NewQuestion" component={NewQuestion} options={{ title: 'Add Card' }} />
       <Stack.Screen name="Quiz" component={Quiz} options={{ title: 'Quiz' }} />
     </Stack.Navigator>
   )
@@ -49,6 +50,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
+          <StatusBar style="light" />
           <NavigationContainer>
             <Tabs />
           </NavigationContainer>

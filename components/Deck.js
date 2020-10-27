@@ -5,9 +5,32 @@ import { purple, lightPurp } from '../utils/colors'
 
 class Deck extends Component {
   render() {
+    const { deck, navigation } = this.props
+    const { title, id, questions } = deck
+
     return (
       <View style={styles.container}>
-        <Text>TEST</Text>
+        <View style={{ flex: 1 }}>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.text}>
+              {questions.length > 1
+                ? questions.length + ' Cards'
+                : questions.length + ' Card'}
+            </Text>
+        </View>
+        <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Quiz', { id: id })}
+            disabled={questions.length === 0}
+            >
+              <Text>Start Quiz</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('NewQuestion', { id: id })}
+            >
+            <Text>Add Card</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     )
   }
@@ -17,8 +40,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   title: {
     fontSize: 20,
