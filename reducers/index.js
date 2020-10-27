@@ -13,13 +13,14 @@ export default function decks (state = {}, action) {
         ...action.decks
       }
     case ADD_DECK: {
-      const { id, title } = action
+      const { deck } = action
+      const { id, title, questions } = deck
       return {
         ...state,
         [id]: {
-          title: title,
-          id: id,
-          questions: []
+          title,
+          id,
+          questions,
         }
       }
     }

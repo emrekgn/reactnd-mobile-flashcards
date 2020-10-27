@@ -13,11 +13,10 @@ function getDecksAction (data) {
   }
 }
 
-function addDeckAction (id, title) {
+function addDeckAction (deck) {
   return {
     type: ADD_DECK,
-    id,
-    title,
+    deck,
   }
 }
 
@@ -31,18 +30,19 @@ function addCardAction (card, id) {
 
 export function handleInitialData () {
   return (dispatch) => {
-    return getDecks().then(data => {
-      console.log("DATAAA:", data)
-      dispatch(getDecksAction(data)) 
-    })
+    return getDecks()
+      .then(data => {
+        dispatch(getDecksAction(data)) 
+      }).catch(err => console.log(err))
   }
 }
 
-export function handleAddDeck(title) {
+export function handleAddDeck(deck) {
   return (dispatch) => {
-    return addDeck(title).then((id) => {
-      dispatch(addDeckAction(id, title))
-    })
+    return addDeck(deck)
+      .then(() => {
+        dispatch(addDeckAction(deck))
+      }).catch(err => console.log(err))
   }
 }
 
@@ -51,6 +51,6 @@ export function handleAddCard(card, id) {
     return dispatch(addCardToDeck(card, id))
       .then(() => {
         dispatch(addCardAction(card, id))
-      })
+      }).catch(err => console.log(err))
   }
 }

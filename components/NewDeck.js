@@ -3,7 +3,7 @@ import { View, Text, StyleSheet } from 'react-native'
 import { TextInput } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { handleAddDeck } from '../actions/index'
-import { purple, white } from '../utils/colors'
+import { generateUID } from '../utils/helpers'
 import { Button } from 'react-native-paper'
 
 class NewDeck extends Component {
@@ -24,7 +24,11 @@ class NewDeck extends Component {
       return
     }
 
-    dispatch(handleAddDeck(title))
+    dispatch(handleAddDeck({
+      id: generateUID(),
+      title,
+      questions: []
+    }))
     navigation.goBack()
   }
   render() {

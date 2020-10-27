@@ -1,5 +1,4 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { generateUID } from './helpers'
 
 export const DECK_STORAGE_KEY = "@mobile-flashcards:decks";
 
@@ -61,30 +60,20 @@ export function getDecks() {
     })
 }
 
-export function getDeck(id) {
-  return getData(DECK_STORAGE_KEY)
-    .then((data) => JSON.parse(data)[id])
-}
-
-export function addDeck(title) {
-  getDecks().then((data) => {
-    const id = generateUID()
-    data[id] = {
-      title: title,
-      id: id,
-      questions: []
-    }
-    storeData(DECK_STORAGE_KEY, data)
-    return id
+export function addDeck(deck) {
+  const jsonValue = JSON.stringify({ 
+    [deck.id]: deck
   })
+  return AsyncStorage.mergeItem(DECK_STORAGE_KEY, jsonValue)
 }
 
 export function addCardToDeck(card, id) {
   getDecks().then((data) => {
     if (!data[id]) {
+      console.log('Deck with provided ID does not exist:', id)
       return
     }
     data[id].questions.push(card)
-    storeData(DECK_STORAGE_KEY, data)
+    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(data))
   })
 }
