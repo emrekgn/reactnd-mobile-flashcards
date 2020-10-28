@@ -14,13 +14,22 @@ class Deck extends Component {
   }
   render() {
     const { deck, navigation } = this.props
+
+    if (!deck) {
+      return (
+        <View style={{ flex: 1 }}>
+          <Text>Processing...</Text>
+        </View>
+      )
+    }
+
     const { title, id, questions } = deck
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
           <Card>
-            <Card.Content>
+            <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
               <Title>{title}</Title>
               <Paragraph style={styles.text}>
                 {questions.length > 1

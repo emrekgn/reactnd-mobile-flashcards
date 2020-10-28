@@ -75,7 +75,9 @@ export function removeDeck(id) {
     }
     data[id] = undefined
     delete data[id]
-    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(data))
+    return AsyncStorage.removeItem(DECK_STORAGE_KEY).then(() => {
+      AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(data))
+    })
   })
 }
 

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
-import { purple, lightPurp } from '../utils/colors'
+import { purple, lightPurp, red } from '../utils/colors'
 import { Avatar, Button, Card, Title, Paragraph, Badge } from 'react-native-paper'
 
 const LeftContent = props => <Avatar.Icon {...props} icon="comment-question-outline" />
@@ -70,28 +70,32 @@ class Quiz extends Component {
               && <Paragraph style={styles.text}>{answer}</Paragraph> }
           </Card.Content>
           <Card.Actions>
-            <Button
-              onPress={this.handleShowAnswer}
-              style={{ marginRight: 2 }}
-              mode='text'
-            >
-              <Text>Show Answer</Text>
-            </Button>
-            <Button
-              mode='contained'
-              icon='check-outline'
-              style={{ marginRight: 1 }}
-              onPress={() => this.handleAnswer(true)}
-            >
-              <Text>Correct</Text>
-            </Button>
-            <Button
-              mode='contained'
-              icon='skull-crossbones-outline'
-              onPress={() => this.handleAnswer(false)}
-            >
-              <Text>Incorrect</Text>
-            </Button>
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+              <View style={{ flexDirection: 'row' }} >
+                <Button
+                  mode='contained'
+                  icon='check-outline'
+                  style={{ marginRight: 1 }}
+                  onPress={() => this.handleAnswer(true)}
+                >
+                  <Text>Correct</Text>
+                </Button>
+                <Button
+                  mode='contained'
+                  icon='skull-crossbones-outline'
+                  onPress={() => this.handleAnswer(false)}
+                >
+                  <Text>Incorrect</Text>
+                </Button>
+              </View>
+              <Button
+                onPress={this.handleShowAnswer}
+                style={{ marginTop: 10, color: red }}
+                mode='text'
+              >
+                <Text>Show Answer</Text>
+              </Button>
+            </View>
           </Card.Actions>
         </Card>
       </View>
