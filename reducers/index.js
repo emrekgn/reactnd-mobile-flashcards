@@ -2,7 +2,6 @@ import { GET_DECKS,
   ADD_DECK,
   REMOVE_DECK,
   ADD_CARD,
-  REMOVE_CARD
 } from '../actions'
 
 export default function decks (state = {}, action) {
@@ -39,17 +38,7 @@ export default function decks (state = {}, action) {
         ...state,
         [id]: {
           ...state[id],
-          questions: state[id].questions.push(card)
-        }
-      }
-    }
-    case REMOVE_CARD: {
-      const { id, card } = action
-      return {
-        ...state,
-        [id]: {
-          ...state[id],
-          questions: state[id].questions.filter(item => item.question !== card.question)
+          questions: state[id].questions.concat([card])
         }
       }
     }

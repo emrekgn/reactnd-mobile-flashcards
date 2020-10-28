@@ -11,7 +11,7 @@ class Deck extends Component {
 
     return (
       <View style={{ flex: 1 }}>
-        <View style={{ flex: 1, justifyContent: 'center' }}>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
           <Card>
             <Card.Content>
               <Title>{title}</Title>
@@ -38,7 +38,7 @@ class Deck extends Component {
             mode='contained'
             icon='plus'
             >
-            <Text>Add Card</Text>
+              <Text>Add Card</Text>
           </Button>
         </View>
       </View>

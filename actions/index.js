@@ -1,10 +1,9 @@
-import { getDecks, addDeck, addCardToDeck } from '../utils/api'
+import { getDecks, addDeck, removeDeck, addCardToDeck } from '../utils/api'
 
 export const GET_DECKS = 'GET_DECKS'
 export const ADD_DECK = 'ADD_DECK'
 export const REMOVE_DECK = 'REMOVE_DECK'
 export const ADD_CARD = 'ADD_CARD'
-export const REMOVE_CARD = 'REMOVE_CARD'
 
 function getDecksAction (data) {
   return {
@@ -17,6 +16,13 @@ function addDeckAction (deck) {
   return {
     type: ADD_DECK,
     deck,
+  }
+}
+
+function removeDeckAction (id) {
+  return {
+    type: REMOVE_DECK,
+    id,
   }
 }
 
@@ -37,20 +43,32 @@ export function handleInitialData () {
   }
 }
 
-export function handleAddDeck(deck) {
+export function handleAddDeck (deck) {
   return (dispatch) => {
     return addDeck(deck)
       .then(() => {
         dispatch(addDeckAction(deck))
-      }).catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
   }
 }
 
-export function handleAddCard(card, id) {
+export function handleRemoveDeck (id) {
   return (dispatch) => {
-    return dispatch(addCardToDeck(card, id))
+    return removeDeck(id)
+      .then(() => { 
+        dispatch(removeDeckAction(id)) 
+      })
+      .catch(err => console.log(err))
+  }
+}
+
+export function handleAddCard (card, id) {
+  return (dispatch) => {
+    return addCardToDeck(card, id)
       .then(() => {
         dispatch(addCardAction(card, id))
-      }).catch(err => console.log(err))
+      })
+      .catch(err => console.log(err))
   }
 }

@@ -67,8 +67,20 @@ export function addDeck(deck) {
   return AsyncStorage.mergeItem(DECK_STORAGE_KEY, jsonValue)
 }
 
+export function removeDeck(id) {
+  return getDecks().then((data) => {
+    if (!data[id]) {
+      console.log('Deck with provided ID does not exist:', id)
+      return
+    }
+    data[id] = undefined
+    delete data[id]
+    return AsyncStorage.mergeItem(DECK_STORAGE_KEY, JSON.stringify(data))
+  })
+}
+
 export function addCardToDeck(card, id) {
-  getDecks().then((data) => {
+  return getDecks().then((data) => {
     if (!data[id]) {
       console.log('Deck with provided ID does not exist:', id)
       return

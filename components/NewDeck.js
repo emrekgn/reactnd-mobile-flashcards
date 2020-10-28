@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
-import { TextInput } from 'react-native-paper'
+import { View, Text, StyleSheet, KeyboardAvoidingView } from 'react-native'
+import { TextInput, Button } from 'react-native-paper'
 import { connect } from 'react-redux'
 import { handleAddDeck } from '../actions/index'
 import { generateUID } from '../utils/helpers'
-import { Button } from 'react-native-paper'
 
 class NewDeck extends Component {
   state = {
@@ -33,37 +32,33 @@ class NewDeck extends Component {
   }
   render() {
     const { title } = this.state
+
     return (
-      <View style={{ flex: 1 }}>
-          <View style={{ flex: 1, justifyContent: 'center' }}>
-            <TextInput
-              styles={styles.row}
-              onChangeText={this.handleChange}
-              label="What is the title of your new deck?"
-              value={title}
-              onChangeText={this.handleTextChange}
-            />
-          </View>
-          <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-              <Button 
-                onPress={this.handleSubmit} 
-                style={{ marginTop: 10 }}
-                mode='contained'
-                icon='content-save'
-                >
-                  <Text>Submit</Text>
-              </Button>
-          </View>
-      </View>
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior='height'>
+        <View style={{ flex: 1, justifyContent: 'center' }}>
+          <TextInput
+            styles={styles.row}
+            label="What is the title of your new deck?"
+            value={title}
+            onChangeText={this.handleTextChange}
+          />
+        </View>
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <Button 
+            onPress={this.handleSubmit} 
+            style={{ marginTop: 10 }}
+            mode='contained'
+            icon='content-save'
+            >
+              <Text>Submit</Text>
+          </Button>
+        </View>
+      </KeyboardAvoidingView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-  },
   row: {
     flexDirection: 'row',
     flex: 1,
