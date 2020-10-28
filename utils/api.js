@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-export const DECK_STORAGE_KEY = "@mobile-flashcards:decks";
+export const DECK_STORAGE_KEY = "@mobile-flashcards:decks"
 
 // Just some initial data for demo purposes:
 const INITIAL_DATA = {

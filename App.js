@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { StyleSheet, View } from 'react-native'
+import { StyleSheet, View, Platform } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer from './reducers'
@@ -16,6 +16,8 @@ import { activeColor, inactiveColor, purple } from './utils/colors'
 import { Provider as PaperProvider } from 'react-native-paper'
 import UdaciStatusBar from './components/UdaciStatusBar'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import { clearLocalNotification, setLocalNotification } from './utils/helpers'
+import Constants from 'expo-constants'
 
 const store = createStore(reducer, middleware)
 const Stack = createStackNavigator()
@@ -65,6 +67,12 @@ function Tabs() {
 }
 
 export default class App extends Component {
+  componentDidMount() {
+    // Expo local notification are currently not working in web environment.
+    if (Constants.isDevice && Platform.OS !== 'web') {
+      clearLocalNotification().then(setLocalNotification)
+    }
+  }
   render() {
     return (
       <Provider store={store}>
