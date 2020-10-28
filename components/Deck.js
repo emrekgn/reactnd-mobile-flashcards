@@ -1,10 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet } from 'react-native'
-import { purple, lightPurp } from '../utils/colors'
+import { purple, lightPurp, red } from '../utils/colors'
 import { Button, Card, Title, Paragraph } from 'react-native-paper'
+import { handleRemoveDeck } from '../actions/index'
 
 class Deck extends Component {
+  handleRemoveDeck = () => {
+    const { deck, dispatch, navigation } = this.props
+
+    dispatch(handleRemoveDeck(deck.id))
+    navigation.goBack()
+  }
   render() {
     const { deck, navigation } = this.props
     const { title, id, questions } = deck
@@ -23,7 +30,7 @@ class Deck extends Component {
             </Card.Content>
           </Card>
         </View>
-        <View style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+        <View style={{ flex: 3, alignItems: 'center', justifyContent: 'center' }}>
           <Button
             onPress={() => navigation.navigate('Quiz', { id: id })}
             disabled={questions.length === 0}
@@ -39,6 +46,14 @@ class Deck extends Component {
             icon='plus'
             >
               <Text>Add Card</Text>
+          </Button>
+          <Button
+            style={{ marginTop: 10, color: red }}
+            onPress={this.handleRemoveDeck}
+            mode='text'
+            icon='delete'
+            >
+              <Text>Remove Deck</Text>
           </Button>
         </View>
       </View>
@@ -58,7 +73,7 @@ const styles = StyleSheet.create({
     marginBottom: 10
   },
   text: {
-    fontSize: 15,
+    fontSize: 10,
     color: lightPurp
   }
 });

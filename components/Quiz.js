@@ -38,16 +38,13 @@ class Quiz extends Component {
     const { deck } = this.props
     const { title, questions } = deck
 
-    console.log("Counter:", counter)
-
     if (counter === questions.length) {
-      console.log("GIRDI!!")
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Paragraph>You finished the quiz! Your score:</Paragraph>
           <View><Badge>{(score / questions.length * 100).toFixed(2) + '%'}</Badge></View>
           <Button
-            style={{ marginTop: 15 }}
+            style={{ marginTop: 10 }}
             mode='contained'
             icon='restart'
             onPress={this.restartQuiz}
@@ -60,7 +57,6 @@ class Quiz extends Component {
 
     const { question, answer } = questions[counter]
 
-    console.log("GIRMEDI!!")
     return (
       <View style={{ flex: 1 }}>
         <Card>
