@@ -25,7 +25,6 @@ To get started running the project right away:
 
 ## Project Layout
 ```bash
-├── CONTRIBUTING.md
 ├── README.md - This file.
 ├── index.js # You should not need to modify this file. It is used for DOM rendering only.
 ├── package.json # npm package manager file. It's unlikely that you'll need to modify this.
