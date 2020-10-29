@@ -1,8 +1,10 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { purple, lightPurp, red } from '../utils/colors'
 import { Avatar, Button, Card, Title, Paragraph, Badge } from 'react-native-paper'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
+import Constants from 'expo-constants'
 
 const LeftContent = props => <Avatar.Icon {...props} icon="comment-question-outline" />
 
@@ -33,23 +35,41 @@ class Quiz extends Component {
       score: 0,
     })
   }
+  resetDailyNotification = () => {
+    if (Constants.isDevice && Platform.OS !== 'web') {
+      clearLocalNotification().then(setLocalNotification)
+    }
+  }
   render() {
     const { counter, showAnswer, score } = this.state
-    const { deck } = this.props
+    const { deck, navigation } = this.props
     const { title, questions } = deck
 
     if (counter === questions.length) {
+      this.resetDailyNotification()
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
           <Paragraph>You finished the quiz! Your score:</Paragraph>
-          <View><Badge>{(score / questions.length * 100).toFixed(2) + '%'}</Badge></View>
+          <View>
+            <Badge size={30}>
+              {(score / questions.length * 100).toFixed(2) + '%'}
+            </Badge>
+          </View>
           <Button
-            style={{ marginTop: 10 }}
+            style={{ marginTop: 15 }}
             mode='contained'
             icon='restart'
             onPress={this.restartQuiz}
           >
             <Text>Restart</Text>
+          </Button>
+          <Button
+            style={{ marginTop: 10 }}
+            mode='contained'
+            icon='arrow-left'
+            onPress={() => navigation.goBack()}
+          >
+            <Text>Back to Deck</Text>
           </Button>
         </View>
       )

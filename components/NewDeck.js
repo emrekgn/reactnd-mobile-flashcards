@@ -23,12 +23,15 @@ class NewDeck extends Component {
       return
     }
 
+    const id = generateUID()
     dispatch(handleAddDeck({
-      id: generateUID(),
+      id,
       title,
       questions: []
     }))
-    navigation.goBack()
+    navigation.navigate('Deck', {
+      id
+    })
   }
   render() {
     const { title } = this.state

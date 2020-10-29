@@ -49,14 +49,16 @@ export function setLocalNotification () {
             return
           }
 
+          // Set a trigger for tomorrow
+          const trigger = new Date()
+          trigger.setDate(trigger.getDate() + 1)
+          trigger.setHours(20)
+          trigger.setMinutes(0)
+
           Notifications.cancelAllScheduledNotificationsAsync()
           Notifications.scheduleNotificationAsync({
             content: createNotification(),
-            trigger: {
-              hour: 20,
-              minute: 0,
-              repeats: true,
-            }
+            trigger
           })
 
           AsyncStorage.setItem(NOTIFICATION_STORAGE_KEY, JSON.stringify(true))

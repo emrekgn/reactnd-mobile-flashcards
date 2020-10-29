@@ -29,13 +29,17 @@ class Deck extends Component {
       <View style={{ flex: 1 }}>
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
           <Card>
-            <Card.Content style={{ alignItems: 'center', justifyContent: 'center' }}>
-              <Title>{title}</Title>
-              <Paragraph style={styles.text}>
-                {questions.length > 1
-                  ? questions.length + ' Cards'
-                  : questions.length + ' Card'}
-              </Paragraph>
+            <Card.Content style={{ flex: 2, alignItems: 'center', justifyContent: 'center' }}>
+              <View>
+                <Title style={styles.title}>{title}</Title>
+              </View>
+              <View>
+                <Paragraph style={styles.text}>
+                  {questions.length > 1
+                    ? questions.length + ' Cards'
+                    : questions.length + ' Card'}
+                </Paragraph>
+              </View>
             </Card.Content>
           </Card>
         </View>
@@ -57,7 +61,8 @@ class Deck extends Component {
               <Text>Add Card</Text>
           </Button>
           <Button
-            style={{ marginTop: 10, color: red }}
+            style={{ marginTop: 10 }}
+            theme={{ color: red }}
             onPress={this.handleRemoveDeck}
             mode='text'
             icon='delete'
@@ -76,14 +81,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   title: {
-    fontSize: 20,
+    fontSize: 25,
     fontWeight: "bold",
     color: purple,
     marginBottom: 10
   },
   text: {
-    fontSize: 10,
-    color: lightPurp
+    fontSize: 15,
+    color: lightPurp,
   }
 });
 
